@@ -1,18 +1,15 @@
 # app/controllers/profiles_controller.rb
 class ProfilesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :set_user
 
   def show
-    @user = current_user
   end
 
   def edit
-    @user = current_user
     @user.build_address unless @user.address
   end
 
   def update
-    @user = current_user
     if @user.update(user_params)
       redirect_to profile_path, notice: "Perfil atualizado!"
     else
@@ -27,7 +24,11 @@ class ProfilesController < ApplicationController
 
   private
 
+  def set_user
+    @user = current_user
+  end
+
   def user_params
-    params.require(:user).permit(:name, :fantasy_name, :email, address_attributes: [:street, :city, :state, :cep])
+    params.require(:user).permit(:name, :fantasy_name, :email, address_attributes: [:street, :city, :state, :zipcode])
   end
 end
