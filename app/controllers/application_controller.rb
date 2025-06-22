@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   def after_sign_in_path_for(resource)
-    session.delete(:user_return_to) || super
+    session.delete(:user_return_to) || announcements_path || super
   end
 
   private
