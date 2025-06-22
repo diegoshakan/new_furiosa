@@ -1,0 +1,25 @@
+<div class="container mx-auto p-4">
+  <h1 class="text-3xl font-bold mb-4">Novo Anúncio</h1>
+
+  <%= form_with model: @announcement, local: true, multipart: true do |f| %>
+    <%= f.label :title, "Título" %>
+    <%= f.text_field :title, class: "border p-2 w-full mb-2" %>
+
+    <%= f.label :description, "Descrição" %>
+    <%= f.text_area :description, class: "border p-2 w-full mb-2" %>
+
+    <%= f.label :price, "Preço" %>
+    <%= f.number_field :price, step: 0.01, class: "border p-2 w-full mb-2" %>
+
+    <%= f.label :category_id, "Categoria" %>
+    <%= f.collection_select :category_id, Category.all, :id, :name, { prompt: "Selecione uma categoria" }, class: "border p-2 w-full mb-2" %>
+
+    <%= f.label :subcategory_id, "Subcategoria" %>
+    <%= f.collection_select :subcategory_id, Subcategory.all, :id, :name, { prompt: "Selecione uma subcategoria" }, class: "border p-2 w-full mb-2" %>
+
+    <%= f.label :images, "Imagens (máximo 5)" %>
+    <%= f.file_field :images, multiple: true, class: "border p-2 w-full mb-2" %>
+
+    <%= f.submit "Criar Anúncio", class: "bg-blue-500 text-white p-2 rounded" %>
+  <% end %>
+</div>

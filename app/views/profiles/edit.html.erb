@@ -1,0 +1,73 @@
+<div class="container mx-auto p-4">
+  <h1 class="text-3xl font-bold mb-4">Editar Perfil</h1>
+
+  <%= form_with model: @user, url: profile_path, local: true, class: "space-y-4" do |f| %>
+    <!-- Nome -->
+    <div>
+      <%= f.label :name, "Nome", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :name, class: "border p-2 w-full rounded mt-1 focus:ring-blue-500 focus:border-blue-500" %>
+      <% if @user.errors[:name].any? %>
+        <p class="text-red-500 text-sm mt-1"><%= @user.errors[:name].join(", ") %></p>
+      <% end %>
+    </div>
+
+    <!-- Nome Fantasia -->
+    <div>
+      <%= f.label :fantasy_name, "Nome Fantasia (opcional)", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :fantasy_name, class: "border p-2 w-full rounded mt-1 focus:ring-blue-500 focus:border-blue-500" %>
+      <% if @user.errors[:fantasy_name].any? %>
+        <p class="text-red-500 text-sm mt-1"><%= @user.errors[:fantasy_name].join(", ") %></p>
+      <% end %>
+    </div>
+
+    <!-- Email -->
+    <div>
+      <%= f.label :email, "Email", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.email_field :email, class: "border p-2 w-full rounded mt-1 focus:ring-blue-500 focus:border-blue-500" %>
+      <% if @user.errors[:email].any? %>
+        <p class="text-red-500 text-sm mt-1"><%= @user.errors[:email].join(", ") %></p>
+      <% end %>
+    </div>
+
+    <!-- Endereço -->
+    <%= f.fields_for :address do |address_f| %>
+      <div>
+        <%= address_f.label :street, "Rua", class: "block text-sm font-medium text-gray-700" %>
+        <%= address_f.text_field :street, class: "border p-2 w-full rounded mt-1 focus:ring-blue-500 focus:border-blue-500" %>
+        <% if @user.address&.errors[:street]&.any? %>
+          <p class="text-red-500 text-sm mt-1"><%= @user.address.errors[:street].join(", ") %></p>
+        <% end %>
+      </div>
+
+      <div>
+        <%= address_f.label :city, "Cidade", class: "block text-sm font-medium text-gray-700" %>
+        <%= address_f.text_field :city, class: "border p-2 w-full rounded mt-1 focus:ring-blue-500 focus:border-blue-500" %>
+        <% if @user.address&.errors[:city]&.any? %>
+          <p class="text-red-500 text-sm mt-1"><%= @user.address.errors[:city].join(", ") %></p>
+        <% end %>
+      </div>
+
+      <div>
+        <%= address_f.label :state, "Estado", class: "block text-sm font-medium text-gray-700" %>
+        <%= address_f.text_field :state, class: "border p-2 w-full rounded mt-1 focus:ring-blue-500 focus:border-blue-500" %>
+        <% if @user.address&.errors[:state]&.any? %>
+          <p class="text-red-500 text-sm mt-1"><%= @user.address.errors[:state].join(", ") %></p>
+        <% end %>
+      </div>
+
+      <div>
+        <%= address_f.label :cep, "CEP", class: "block text-sm font-medium text-gray-700" %>
+        <%= address_f.text_field :cep, class: "border p-2 w-full rounded mt-1 focus:ring-blue-500 focus:border-blue-500" %>
+        <% if @user.address&.errors[:cep]&.any? %>
+          <p class="text-red-500 text-sm mt-1"><%= @user.address.errors[:cep].join(", ") %></p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <!-- Botões -->
+    <div class="flex gap-4">
+      <%= f.submit "Salvar Alterações", class: "bg-blue-500 text-white p-2 rounded hover:bg-blue-600" %>
+      <%= link_to "Cancelar", profile_path, class: "bg-gray-500 text-white p-2 rounded hover:bg-gray-600" %>
+    </div>
+  <% end %>
+</div>

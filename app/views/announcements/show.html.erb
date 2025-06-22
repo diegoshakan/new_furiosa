@@ -1,0 +1,57 @@
+<div class="container mx-auto p-4">
+  <h1 class="text-3xl font-bold"><%= @announcement.title %></h1>
+  <p class="text-gray-600 mt-2"><%= @announcement.description %></p>
+  <p class="text-lg font-semibold mt-2"><%= number_to_currency(@announcement.price, unit: "R$") %></p>
+  <p class="text-gray-500">Por: <%= @announcement.user.name %></p>
+  <p class="text-gray-500"><%= @announcement.user.address.city %>, <%= @announcement.user.address.state %></p>
+
+  <!-- Imagens -->
+  <div class="grid grid-cols-2 md:grid-cols-5 gap-2 mt-4">
+    <% if @announcement.images.attached? %>
+      <% @announcement.images.each do |image| %>
+        <%= image_tag image, class: "w-full h-32 object-cover rounded" %>
+      <% end %>
+    <% else %>
+      <p class="text-gray-500">Nenhuma imagem disponível</p>
+    <% end %>
+  </div>
+
+  <!-- Botões de Edição e Exclusão (apenas para o dono) -->
+  <% if user_signed_in? && @announcement.user == current_user %>
+    <div class="mt-4 flex gap-2">
+      <%= link_to "Editar Anúncio", edit_announcement_path(@announcement), class: "bg-yellow-500 text-white p-2 rounded hover:bg-yellow-600" %>
+      <%= button_to "Excluir Anúncio", announcement_path(@announcement), method: :delete, data: { confirm: "Tem certeza que deseja excluir este anúncio?" }, class: "bg-red-500 text-white p-2 rounded hover:bg-red-600" %>
+    </div>
+  <% end %>
+
+  <!-- Curtidas -->
+  <div data-controller="likes" class="mt-4">
+    <%= button_to "Curtir (#{@announcement.likes.count})", announcement_likes_path(@announcement), method: :post, data: { turbo_stream: true }, class: "bg-green-500 text-white p-2 rounded hover:bg-green-600" %>
+  </div>
+
+  <!-- Comentários -->
+  <h2 class="text-2xl font-bold mt-6">Comentários</h2>
+  <%= turbo_frame_tag "comments" do %>
+    <% if @comments.any? %>
+      <% @comments.each do |comment| %>
+        <p class="mt-2"><strong><%= comment.user.name %>:</strong> <%= comment.content %></p>
+      <% end %>
+    <% else %>
+      <p class="text-gray-500 mt-2">Nenhum comentário ainda.</p>
+    <% end %>
+  <% end %>
+
+  <% if user_signed_in? %>
+    <%= form_with model: [@announcement, Comment.new], data: { turbo_frame: "comments" } do |f| %>
+      <%= f.text_area :content, placeholder: "Adicione seu comentário...", class: "border w-full p-2 mt-4 rounded" %>
+      <%= f.submit "Comentar", class: "bg-blue-500 text-white p-2 rounded mt-2 hover:bg-blue-600" %>
+    <% end %>
+  <% else %>
+    <p class="mt-4 text-gray-500">Faça login para comentar.</p>
+  <% end %>
+
+  <!-- Link para voltar -->
+  <div class="mt-4">
+    <%= link_to "Voltar para a lista", announcements_path, class: "text-blue-500 hover:underline" %>
+  </div>
+</div>

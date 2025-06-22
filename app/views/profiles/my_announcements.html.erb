@@ -1,0 +1,40 @@
+<div class="container mx-auto p-4">
+  <h1 class="text-3xl font-bold mb-4">Meus Anúncios</h1>
+
+  <!-- Formulário de Busca -->
+  <%= search_form_for @q, url: my_announcements_profile_path, class: "mb-6" do |f| %>
+    <div class="flex flex-wrap gap-4">
+      <%= f.search_field :title_or_description_cont, placeholder: "Buscar por título ou descrição...", class: "border p-2 rounded w-full md:w-1/3" %>
+      <%= f.submit "Buscar", class: "bg-blue-500 text-white p-2 rounded hover:bg-blue-600" %>
+      <%= link_to "Limpar", my_announcements_profile_path, class: "bg-gray-500 text-white p-2 rounded hover:bg-gray-600" %>
+    </div>
+  <% end %>
+
+  <!-- Link para criar novo anúncio -->
+  <div class="mt-6">
+    <%= link_to "Criar Novo Anúncio", new_announcement_path, class: "bg-green-500 text-white p-2 rounded hover:bg-green-600" %>
+  </div>
+  
+  <!-- Lista de Anúncios -->
+  <%= turbo_frame_tag "my_announcements" do %>
+    <% if @announcements.any? %>
+      <div class="grid grid-cols-1 gap-4">
+        <% @announcements.each do |announcement| %>
+          <div class="border mt-6 p-4 rounded shadow hover:shadow-lg flex justify-between items-center">
+            <div>
+              <h2 class="text-xl font-semibold"><%= announcement.title %></h2>
+              <p class="text-gray-600"><%= number_to_currency(announcement.price, unit: "R$") %></p>
+              <p class="text-gray-500">Postagem: <%= l(announcement.created_at, format: :short) %></p>
+            </div>
+            <div class="flex gap-2">
+              <%= link_to "Editar", edit_announcement_path(announcement), class: "bg-yellow-500 text-white p-2 rounded hover:bg-yellow-600" %>
+              <%= button_to "Apagar", announcement_path(announcement), method: :delete, data: { confirm: "Tem certeza que deseja apagar este anúncio?" }, class: "bg-red-500 text-white p-2 rounded hover:bg-red-600" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-gray-500">Você ainda não tem anúncios.</p>
+    <% end %>
+  <% end %>
+</div>
