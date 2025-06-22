@@ -1,5 +1,5 @@
 <!-- app/views/layouts/_navbar.html.erb -->
-<nav class="bg-blue-600 text-white shadow-md">
+<nav class="bg-blue-600 text-white shadow-md" data-controller="menu">
   <div class="container mx-auto px-4 py-3 flex items-center justify-between">
     <!-- Logo/Nome do App -->
     <%= link_to "Furiosa", root_path, class: "text-2xl font-bold" %>
@@ -11,7 +11,6 @@
       <% if user_signed_in? %>
         <%= link_to "Meus Anúncios", my_announcements_profile_path, class: "hover:text-gray-200" %>
         <%= link_to "Meu Perfil", profile_path, class: "hover:text-gray-200" %>
-        <%= link_to "Novo Anúncio", new_announcement_path, class: "hover:text-gray-200" %>
         <%= link_to "Sair", destroy_user_session_path, data: { turbo_method: :delete }, class: "hover:text-gray-200" %>
       <% else %>
         <%= link_to "Entrar", new_user_session_path, class: "hover:text-gray-200" %>
@@ -19,7 +18,7 @@
     </div>
 
     <!-- Botão do Menu Hamburguer (para telas menores) -->
-    <button class="md:hidden focus:outline-none" id="menu-button" aria-label="Toggle menu">
+    <button class="md:hidden focus:outline-none" id="menu-button" aria-label="Toggle menu" data-action="menu#toggle">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
       </svg>
@@ -27,7 +26,7 @@
   </div>
 
   <!-- Menu Móvel -->
-  <div class="hidden md:hidden bg-blue-700" id="mobile-menu">
+  <div class="hidden md:hidden bg-blue-700" id="mobile-menu" data-menu-target="menu">
     <div class="container mx-auto px-4 py-2 flex flex-col space-y-2">
       <%= link_to "Anúncios", announcements_path, class: "hover:text-gray-200 py-2" %>
       <%= link_to "Novo Anúncio", new_announcement_path, class: "hover:text-gray-200 py-2" %>
@@ -41,10 +40,3 @@
     </div>
   </div>
 </nav>
-
-<script>
-  document.getElementById('menu-button').addEventListener('click', () => {
-    const mobileMenu = document.getElementById('mobile-menu');
-    mobileMenu.classList.toggle('hidden');
-  });
-</script>
