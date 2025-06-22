@@ -2,12 +2,12 @@
   <h1 class="text-3xl font-bold mb-4">Anúncios de Festas - Furiosa</h1>
 
   <!-- Filtros e Pesquisa -->
-  <%= search_form_for @q, url: announcements_path, method: :get, data: { controller: "address" } do |f| %>
+  <%= search_form_for @q, url: announcements_path, method: :get, data: { controller: "load-cities" } do |f| %>
     <div class="flex flex-wrap gap-4 mb-4">
       <%= f.text_field :title_or_description_cont, placeholder: "Pesquisar...", class: "border p-2 rounded" %>
       <%= f.collection_select :category_id_eq, Category.all, :id, :name, { include_blank: "Categoria" }, class: "border p-2 rounded" %>
-      <%= f.select :user_address_state_eq, Address.distinct.pluck(:state), { include_blank: "Selecione um Estado" }, class: "border p-2 rounded", data: { address_target: "state", action: "change->address#loadCities" } %>
-      <%= f.select :user_address_city_eq, [], { include_blank: "Selecione uma Cidade" }, class: "border p-2 rounded", data: { address_target: "city" } %>
+      <%= f.select :user_address_state_eq, Address.distinct.pluck(:state), { include_blank: "Selecione um Estado" }, class: "border p-2 rounded", data: { load_cities_target: "state", action: "change->load-cities#loadCities" } %>
+      <%= f.select :user_address_city_eq, [], { include_blank: "Selecione uma Cidade" }, class: "border p-2 rounded", data: { load_cities_target: "city" } %>
       <%= f.submit "Filtrar", class: "bg-blue-500 text-white p-2 rounded hover:bg-blue-600" %>
     </div>
   <% end %>

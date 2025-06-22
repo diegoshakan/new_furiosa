@@ -3,6 +3,10 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
   static targets = ["state", "city"]; // Define os elementos alvo
 
+  connect() {
+    console.log("Load cities controller conectado!");
+  }
+
   loadCities() {
     const stateId = this.stateTarget.value;
 
