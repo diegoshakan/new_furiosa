@@ -2,12 +2,12 @@
   <h1 class="text-3xl font-bold mb-4">Anúncios de Festas - Furiosa</h1>
 
   <!-- Filtros e Pesquisa -->
-  <%= form_with url: announcements_path, method: :get, data: { turbo_frame: "announcements" } do |f| %>
+  <%= search_form_for @q, url: announcements_path, method: :get, data: { turbo_frame: "announcements" } do |f| %>
     <div class="flex flex-wrap gap-4 mb-4">
-      <%= f.text_field :search, placeholder: "Pesquisar...", class: "border p-2 rounded" %>
-      <%= f.select :category_id, Category.all.map { |c| [c.name, c.id] }, { include_blank: "Categoria" }, class: "border p-2 rounded" %>
-      <%= f.text_field :city, placeholder: "Cidade", class: "border p-2 rounded" %>
-      <%= f.text_field :state, placeholder: "Estado", class: "border p-2 rounded" %>
+      <%= f.text_field :title_or_description_cont, placeholder: "Pesquisar...", class: "border p-2 rounded" %>
+      <%= f.collection_select :category_id_eq, Category.all, :id, :name, { include_blank: "Categoria" }, class: "border p-2 rounded" %>
+      <%= f.text_field :user_address_city_eq, placeholder: "Cidade", class: "border p-2 rounded" %>
+      <%= f.text_field :user_address_state_eq, placeholder: "Estado", class: "border p-2 rounded" %>
       <%= f.submit "Filtrar", class: "bg-blue-500 text-white p-2 rounded hover:bg-blue-600" %>
     </div>
   <% end %>

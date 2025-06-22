@@ -4,15 +4,8 @@ class AnnouncementsController < ApplicationController
   before_action :set_announcement, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @announcements = Announcement.includes([ :images_attachments ]).includes(:user).all
-    @announcements = includes_announcements.where(category_id: params[:category_id]) if params[:category_id].present?
-    @announcements = includes_announcements.where(users: { address: { city: params[:city] } }) if params[:city].present?
-    @announcements = includes_announcements.where(users: { address: { state: params[:state] } }) if params[:state].present?
-    @announcements = @announcements.search(params[:search]) if params[:search].present?
-  end
-
-  def includes_announcements
-    @announcements = Announcement.includes([ :images_attachments ]).includes(:user).all
+    @q = Announcement.ransack(params[:q]) # Cria o objeto de busca com os parâmetros
+    @announcements = @q.result.includes(:images_attachments, :user) # Executa a busca e inclui associações
   end
 
   def show
