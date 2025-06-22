@@ -24,7 +24,7 @@
               <span class="text-gray-500">Sem imagem</span>
             </div>
           <% end %>
-          <h2 class="text-xl font-semibold"><%= announcement.title %></h2>
+          <h2 class="text-xl font-semibold"><%= announcement.title %></h2> Curtidas: <%= announcement.likes.count %>
           <p class="text-gray-600"><%= number_to_currency(announcement.price, unit: "R$") %></p>
           <p class="text-gray-500">Por: <%= announcement.user.name %></p>
           <%= link_to "Ver Detalhes", announcement_path(announcement), class: "text-blue-500 hover:underline", data: { turbo_frame: "_top" } %>

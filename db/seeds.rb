@@ -1,8 +1,9 @@
 # Categorias e Subcategorias
 casamento = Category.create(name: "Casamento")
-Category.create(name: "Festa Infantil")
+festa_infantil = Category.create(name: "Festa Infantil")
 cha_bebe = Category.create(name: "Chá de Bebê")
 Subcategory.create(name: "Buffet", category: casamento)
+Subcategory.create(name: "Buffet", category: festa_infantil)
 Subcategory.create(name: "Decoração", category: cha_bebe)
 
 # Usuários
@@ -35,6 +36,19 @@ announcement2 = user2.announcements.create!(
 )
 announcement2.images.attach(io: File.open("public/image2.jpg"), filename: "image2.jpg")
 
+announcement3 = user1.announcements.create!(
+  title: "Festa Infantil Completa",
+  description: "Buffet completo para 100 pessoas",
+  code: "ADM003",
+  price: 6000.00,
+  category: festa_infantil,
+  subcategory: Subcategory.first,
+  posted_at: Time.now
+)
+announcement3.images.attach(io: File.open("public/image3.png"), filename: "image3.png")
+
 # Comentários e Curtidas
 announcement1.comments.create!(content: "Ótimo serviço!", user: user2)
 announcement1.likes.create!(user: user2)
+announcement2.likes.create!(user: user1)
+announcement3.likes.create!(user: user1)

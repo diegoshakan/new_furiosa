@@ -5,7 +5,7 @@ class AnnouncementsController < ApplicationController
 
   def index
     @q = Announcement.ransack(params[:q]) # Cria o objeto de busca com os parâmetros
-    @announcements = @q.result.includes(:images_attachments, :user) # Executa a busca e inclui associações
+    @announcements = @q.result.includes(:images_attachments, :user, :likes) # Executa a busca e inclui associações
   end
 
   def show
