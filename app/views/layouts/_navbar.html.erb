@@ -7,6 +7,7 @@
     <!-- Menu Principal -->
     <div class="hidden md:flex items-center space-x-4">
       <%= link_to "Anúncios", announcements_path, class: "hover:text-gray-200" %>
+      <%= link_to "Novo Anúncio", new_announcement_path, class: "hover:text-gray-200 py-2" %>
       <% if user_signed_in? %>
         <%= link_to "Meus Anúncios", my_announcements_profile_path, class: "hover:text-gray-200" %>
         <%= link_to "Meu Perfil", profile_path, class: "hover:text-gray-200" %>
@@ -29,10 +30,10 @@
   <div class="hidden md:hidden bg-blue-700" id="mobile-menu">
     <div class="container mx-auto px-4 py-2 flex flex-col space-y-2">
       <%= link_to "Anúncios", announcements_path, class: "hover:text-gray-200 py-2" %>
+      <%= link_to "Novo Anúncio", new_announcement_path, class: "hover:text-gray-200 py-2" %>
       <% if user_signed_in? %>
         <%= link_to "Meus Anúncios", my_announcements_profile_path, class: "hover:text-gray-200 py-2" %>
         <%= link_to "Meu Perfil", profile_path, class: "hover:text-gray-200 py-2" %>
-        <%= link_to "Novo Anúncio", new_announcement_path, class: "hover:text-gray-200 py-2" %>
         <%= link_to "Sair", destroy_user_session_path, data: { turbo_method: :delete }, class: "hover:text-gray-200 py-2" %>
       <% else %>
         <%= link_to "Entrar", new_user_session_path, class: "hover:text-gray-200 py-2" %>

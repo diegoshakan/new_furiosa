@@ -26,7 +26,7 @@
 
   <!-- Curtidas -->
   <div data-controller="likes" class="mt-4">
-    <%= button_to "Curtir (#{@announcement.likes.count})", announcement_likes_path(@announcement), method: :post, data: { turbo_stream: true }, class: "bg-green-500 text-white p-2 rounded hover:bg-green-600" %>
+    <%= button_to "Curtir (#{@announcement.likes.count})", announcement_likes_path(@announcement, redirect_back: request.fullpath), method: :post, data: { turbo_stream: true }, class: "bg-green-500 text-white p-2 rounded hover:bg-green-600" %>
   </div>
 
   <!-- Comentários -->
@@ -47,7 +47,7 @@
       <%= f.submit "Comentar", class: "bg-blue-500 text-white p-2 rounded mt-2 hover:bg-blue-600" %>
     <% end %>
   <% else %>
-    <p class="mt-4 text-gray-500">Faça login para comentar.</p>
+    <%= link_to "Faça login para comentar.", new_user_session_path, redirect_back: request.fullpath, class: "mt-4" %>
   <% end %>
 
   <!-- Link para voltar -->
