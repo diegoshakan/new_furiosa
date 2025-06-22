@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     get :my_announcements, on: :member
   end
 
-  resources :addresses, only: [] do
+  resources :addresses, only: [ :show, :new, :create, :edit, :update ] do
     collection do
       get :cities
     end

@@ -40,10 +40,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_07_133301) do
   end
 
   create_table "addresses", force: :cascade do |t|
-    t.string "street"
-    t.string "city"
+    t.string "zipcode"
     t.string "state"
-    t.string "cep"
+    t.string "city"
+    t.string "neighborhood"
+    t.string "street"
+    t.string "number"
+    t.string "reference_point"
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

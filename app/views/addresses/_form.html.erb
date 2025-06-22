@@ -1,0 +1,53 @@
+<div class="container mx-auto p-4" data-controller="via-cep">
+  <%= form_with model: @address do |f| %>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Campo para CEP -->
+      <div>
+        <%= f.label :zipcode, "CEP", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.text_field :zipcode, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500", data: { via_cep_target: "zipcode", action: "blur->via-cep#fetchAddress" } %>
+      </div>
+
+      <!-- Campo para Rua -->
+      <div>
+        <%= f.label :street, "Rua", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.text_field :street, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 bg-gray-100 text-gray-500 cursor-not-allowed", data: { via_cep_target: "street" }, readonly: true %>
+      </div>
+
+      <!-- Campo para Número -->
+      <div>
+        <%= f.label :number, "Número", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.text_field :number, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500", data: { via_cep_target: "number" } %>
+      </div>
+
+      <!-- Campo para Bairro -->
+      <div>
+        <%= f.label :neighborhood, "Bairro", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.text_field :neighborhood, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 bg-gray-100 text-gray-500 cursor-not-allowed", data: { via_cep_target: "neighborhood" }, readonly: true %>
+      </div>
+
+      <!-- Campo para Ponto de Referência -->
+      <div>
+        <%= f.label :reference_point, "Ponto de Referência", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.text_field :reference_point, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500", data: { via_cep_target: "referencePoint" } %>
+      </div>
+
+      <!-- Campo para Cidade -->
+      <div>
+        <%= f.label :city, "Cidade", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.text_field :city, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 bg-gray-100 text-gray-500 cursor-not-allowed", data: { via_cep_target: "city" }, readonly: true %>
+      </div>
+
+      <!-- Campo para Estado -->
+      <div>
+        <%= f.label :state, "Estado", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.text_field :state, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 bg-gray-100 text-gray-500 cursor-not-allowed", data: { via_cep_target: "state" }, readonly: true %>
+      </div>
+    </div>
+
+    <!-- Botões de Ação -->
+    <div class="mt-4 flex justify-end gap-4">
+      <%= link_to "Cancelar", profile_path, class: "bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600" %>
+      <%= f.submit "Salvar", class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" %>
+    </div>
+  <% end %>
+</div>

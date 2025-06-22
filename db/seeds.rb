@@ -8,10 +8,13 @@ Subcategory.create(name: "Decoração", category: cha_bebe)
 
 # Usuários
 user1 = User.create!(name: "Diego", email: "diego@example.com", password: "diego@example.com")
-user1.create_address!(street: "Rua A", city: "São Paulo", state: "SP", cep: "12345-678")
+user1.create_address!(street: "Rua A", city: "São Paulo", state: "SP", zipcode: "12345-678")
 
 user2 = User.create!(name: "Kassandra", email: "kassandra@example.com", password: "kassandra@example.com")
-user2.create_address!(street: "Rua B", city: "Rio de Janeiro", state: "RJ", cep: "87654-321")
+user2.create_address!(street: "Rua B", city: "Rio de Janeiro", state: "RJ", zipcode: "87654-321")
+
+User.create!(name: "Aimée", email: "aimee@example.com", password: "aimee@example.com")
+User.create!(name: "Abner", email: "abner@example.com", password: "abner@example.com")
 
 # Anúncios
 announcement1 = user1.announcements.create!(
