@@ -1,19 +1,63 @@
 <%= turbo_frame_tag "announcements" do %>
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
     <% @announcements.each do |announcement| %>
-      <%= link_to announcement_path(announcement), class: "block border p-4 rounded shadow hover:shadow-lg transition-shadow duration-200", data: { turbo_frame: "_top" } do %>
+      <div class="block border p-4 rounded shadow hover:shadow-lg transition-shadow duration-200">
         <% if announcement.images.attached? %>
-          <%= image_tag announcement.images.first, class: "w-full h-48 object-cover rounded mb-2" %>
+          <% if announcement.images.count > 1 %>
+            <!-- Carrossel para múltiplas imagens -->
+            <div class="relative w-full h-48 mb-2 rounded overflow-hidden" 
+                 data-controller="carousel">
+              <% announcement.images.each_with_index do |image, index| %>
+                <div class="carousel-slide absolute inset-0 transition-opacity duration-300 <%= index == 0 ? 'opacity-100' : 'opacity-0' %>" 
+                     data-carousel-target="slide" 
+                     data-slide="<%= index %>">
+                  <%= image_tag image, class: "w-full h-full object-cover" %>
+                </div>
+              <% end %>
+              
+              <!-- Botões de navegação -->
+              <button class="carousel-prev absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-all duration-200" 
+                      data-action="click->carousel#prev">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+              </button>
+              
+              <button class="carousel-next absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-all duration-200" 
+                      data-action="click->carousel#next">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </button>
+              
+              <!-- Indicadores -->
+              <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                <% announcement.images.each_with_index do |image, index| %>
+                  <button class="carousel-indicator w-2 h-2 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition-all duration-200 <%= index == 0 ? 'bg-opacity-100' : '' %>" 
+                          data-carousel-target="indicator" 
+                          data-action="click->carousel#goToSlide" 
+                          data-slide="<%= index %>"></button>
+                <% end %>
+              </div>
+            </div>
+          <% else %>
+            <!-- Imagem única -->
+            <%= image_tag announcement.images.first, class: "w-full h-48 object-cover rounded mb-2" %>
+          <% end %>
         <% else %>
           <div class="w-full h-48 bg-gray-200 flex items-center justify-center rounded mb-2">
             <span class="text-gray-500">Sem imagem</span>
           </div>
         <% end %>
-        <h2 class="text-xl font-semibold"><%= announcement.title %></h2> Curtidas: <%= announcement.likes.count %>
-        <p class="text-gray-600"><%= number_to_currency(announcement.price, unit: "R$") %></p>
-        <p class="text-gray-500">Por: <%= announcement.user.name %></p>
-        <span class="text-blue-500 hover:underline">Ver Detalhes</span>
-      <% end %>
+        
+        <%= link_to announcement_path(announcement), class: "block", data: { turbo_frame: "_top" } do %>
+          <h2 class="text-xl font-semibold"><%= announcement.title %></h2>
+          <p class="text-gray-600">Curtidas: <%= announcement.likes.count %></p>
+          <p class="text-gray-600"><%= number_to_currency(announcement.price, unit: "R$") %></p>
+          <p class="text-gray-500">Por: <%= announcement.user.name %></p>
+          <span class="text-blue-500 hover:underline">Ver Detalhes</span>
+        <% end %>
+      </div>
     <% end %>
   </div>
 <% end %>
