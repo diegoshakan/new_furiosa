@@ -1,0 +1,19 @@
+<%= turbo_frame_tag "announcements" do %>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <% @announcements.each do |announcement| %>
+      <%= link_to announcement_path(announcement), class: "block border p-4 rounded shadow hover:shadow-lg transition-shadow duration-200", data: { turbo_frame: "_top" } do %>
+        <% if announcement.images.attached? %>
+          <%= image_tag announcement.images.first, class: "w-full h-48 object-cover rounded mb-2" %>
+        <% else %>
+          <div class="w-full h-48 bg-gray-200 flex items-center justify-center rounded mb-2">
+            <span class="text-gray-500">Sem imagem</span>
+          </div>
+        <% end %>
+        <h2 class="text-xl font-semibold"><%= announcement.title %></h2> Curtidas: <%= announcement.likes.count %>
+        <p class="text-gray-600"><%= number_to_currency(announcement.price, unit: "R$") %></p>
+        <p class="text-gray-500">Por: <%= announcement.user.name %></p>
+        <span class="text-blue-500 hover:underline">Ver Detalhes</span>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,9 @@
+<div class="grid grid-cols-2 md:grid-cols-5 gap-2 mt-4">
+  <% if @announcement.images.attached? %>
+    <% @announcement.images.each do |image| %>
+      <%= image_tag image, class: "w-full h-32 object-cover rounded" %>
+    <% end %>
+  <% else %>
+    <p class="text-gray-500">Nenhuma imagem disponível</p>
+  <% end %>
+</div>

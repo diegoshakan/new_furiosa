@@ -6,9 +6,20 @@ class AnnouncementsController < ApplicationController
   def index
     @q = Announcement.ransack(params[:q]) # Cria o objeto de busca com os parâmetros
     @announcements = @q.result.includes(:images_attachments, :user, :likes) # Executa a busca e inclui associações
+
+    # Limpa os parâmetros de pesquisa da sessão quando voltar para a listagem
+    session.delete(:last_search_params) if session[:last_search_params].present?
   end
 
   def show
+    # Armazena os parâmetros de pesquisa na sessão se vier da página de listagem
+    if request.referer&.include?("announcements")
+      referer_uri = URI(request.referer)
+      if referer_uri.query.present?
+        session[:last_search_params] = referer_uri.query
+      end
+    end
+
     @comments = @announcement.comments
   end
 

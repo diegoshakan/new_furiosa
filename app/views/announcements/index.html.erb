@@ -2,36 +2,10 @@
   <h1 class="text-3xl font-bold mb-4">Anúncios de Festas - Furiosa</h1>
 
   <!-- Filtros e Pesquisa -->
-  <%= search_form_for @q, url: announcements_path, method: :get, data: { controller: "load-cities" } do |f| %>
-    <div class="flex flex-wrap gap-4 mb-4">
-      <%= f.text_field :title_or_description_cont, placeholder: "Pesquisar...", class: "border p-2 rounded" %>
-      <%= f.collection_select :category_id_eq, Category.all, :id, :name, { include_blank: "Categoria" }, class: "border p-2 rounded" %>
-      <%= f.select :user_address_state_eq, Address.distinct.pluck(:state), { include_blank: "Selecione um Estado" }, class: "border p-2 rounded", data: { load_cities_target: "state", action: "change->load-cities#loadCities" } %>
-      <%= f.select :user_address_city_eq, [], { include_blank: "Selecione uma Cidade" }, class: "border p-2 rounded", data: { load_cities_target: "city" } %>
-      <%= f.submit "Filtrar", class: "bg-blue-500 text-white p-2 rounded hover:bg-blue-600" %>
-    </div>
-  <% end %>
+  <%= render "search_bar" %>
 
   <!-- Lista de Anúncios -->
-  <%= turbo_frame_tag "announcements" do %>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <% @announcements.each do |announcement| %>
-        <div class="border p-4 rounded shadow hover:shadow-lg">
-          <% if announcement.images.attached? %>
-            <%= image_tag announcement.images.first, class: "w-full h-48 object-cover rounded mb-2" %>
-          <% else %>
-            <div class="w-full h-48 bg-gray-200 flex items-center justify-center rounded mb-2">
-              <span class="text-gray-500">Sem imagem</span>
-            </div>
-          <% end %>
-          <h2 class="text-xl font-semibold"><%= announcement.title %></h2> Curtidas: <%= announcement.likes.count %>
-          <p class="text-gray-600"><%= number_to_currency(announcement.price, unit: "R$") %></p>
-          <p class="text-gray-500">Por: <%= announcement.user.name %></p>
-          <%= link_to "Ver Detalhes", announcement_path(announcement), class: "text-blue-500 hover:underline", data: { turbo_frame: "_top" } %>
-        </div>
-      <% end %>
-    </div>
-  <% end %>
+  <%= render "announcements" %>
 
   <!-- Botão para criar novo anúncio (somente para usuários logados) -->
   <% if user_signed_in? %>
