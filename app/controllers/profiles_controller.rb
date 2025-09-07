@@ -18,7 +18,7 @@ class ProfilesController < ApplicationController
   end
 
   def my_announcements
-    @q = current_user.announcements.ransack(params[:q])
+    @q = current_user.announcements.includes(:images_attachments, :category, :subcategory).ransack(params[:q])
     @announcements = @q.result(distinct: true).order(created_at: :desc)
   end
 

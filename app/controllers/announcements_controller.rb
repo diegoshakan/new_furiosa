@@ -63,7 +63,7 @@ class AnnouncementsController < ApplicationController
   private
 
   def set_announcement
-    @announcement = Announcement.includes(:user).find(params[:id])
+    @announcement = Announcement.includes(:user, :category, :subcategory, :images_attachments).find(params[:id])
   end
 
   def announcement_params

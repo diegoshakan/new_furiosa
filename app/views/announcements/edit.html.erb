@@ -30,5 +30,5 @@
     <%= f.submit "Atualizar Anúncio", class: "bg-blue-500 text-white p-2 rounded" %>
   <% end %>
 
-  <%= link_to "Cancelar", announcement_path(@announcement), class: "text-gray-500 mt-4 inline-block" %>
+  <%= link_to "Voltar", request.referer.present? ? request.referer : announcements_path, class: "text-gray-500 mt-4 inline-block" %>
 </div>
