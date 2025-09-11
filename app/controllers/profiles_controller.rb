@@ -19,7 +19,10 @@ class ProfilesController < ApplicationController
 
   def my_announcements
     @q = current_user.announcements.includes(:images_attachments, :category, :subcategory).ransack(params[:q])
-    @announcements = @q.result(distinct: true).order(created_at: :desc)
+    @announcements = @q.result(distinct: true)
+                       .order(created_at: :desc)
+                       .page(params[:page])
+                       .per(6) # 6 anúncios por página
   end
 
   private

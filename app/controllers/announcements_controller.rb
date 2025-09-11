@@ -6,8 +6,8 @@ class AnnouncementsController < ApplicationController
   def index
     @q = Announcement.ransack(params[:q]) # Cria o objeto de busca com os parâmetros
     @announcements = @q.result.includes(:images_attachments, :user, :likes)
-                        .page(params[:page])
-                        .per(12) # 12 anúncios por página
+                       .page(params[:page])
+                       .per(12) # 12 anúncios por página
 
     # Limpa os parâmetros de pesquisa da sessão quando voltar para a listagem
     session.delete(:last_search_params) if session[:last_search_params].present?

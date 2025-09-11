@@ -1,5 +1,5 @@
 <%= search_form_for @q, url: announcements_path, method: :get, data: { controller: "load-cities" } do |f| %>
-    <div class="flex flex-wrap gap-4 mb-4">
+    <div class="flex flex-wrap gap-4 mb-4 justify-center items-center">
       <%= f.text_field :title_or_description_cont, placeholder: "Pesquisar...", class: "border p-2 rounded" %>
       <%= f.collection_select :category_id_eq, Category.all, :id, :name, { include_blank: "Categoria" }, class: "border p-2 rounded" %>
       <%= f.select :user_address_state_eq, Address.distinct.pluck(:state), { include_blank: "Selecione um Estado" }, class: "border p-2 rounded", data: { load_cities_target: "state", action: "change->load-cities#loadCities" } %>

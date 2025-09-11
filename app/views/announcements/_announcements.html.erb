@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "announcements" do %>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
     <% @announcements.each do |announcement| %>
       <div class="block border p-4 rounded shadow hover:shadow-lg transition-shadow duration-200">
         <% if announcement.images.attached? %>

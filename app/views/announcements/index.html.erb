@@ -7,10 +7,8 @@
   <!-- Lista de Anúncios -->
   <%= render "announcements" %>
 
-  <!-- Botão para criar novo anúncio (somente para usuários logados) -->
-  <% if user_signed_in? %>
-    <div class="mt-4">
-      <%= link_to "Criar Novo Anúncio", new_announcement_path, class: "bg-green-500 text-white p-2 rounded hover:bg-green-600" %>
-    </div>
-  <% end %>
+  <!-- Paginacao -->
+  <div class="flex justify-center mt-8">
+    <%= paginate @announcements %>
+  </div>
 </div>

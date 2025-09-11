@@ -32,6 +32,11 @@
             </div>
           </div>
         <% end %>
+
+        <!-- Paginacao -->
+        <div class="flex justify-center mt-8">
+          <%= paginate @announcements %>
+        </div>
       </div>
     <% else %>
       <p class="text-gray-500">Você ainda não tem anúncios.</p>
