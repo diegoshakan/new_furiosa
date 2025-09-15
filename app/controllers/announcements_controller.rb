@@ -22,7 +22,7 @@ class AnnouncementsController < ApplicationController
       end
     end
 
-    @comments = @announcement.comments
+    @comments = @announcement.comments.order(created_at: :desc)
   end
 
   def new

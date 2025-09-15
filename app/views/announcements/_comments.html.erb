@@ -1,19 +1,17 @@
 <h2 class="text-2xl font-bold mt-6">Comentários</h2>
+
+<% if user_signed_in? %>
+  <%= render "comment_form", announcement: @announcement %>
+<% else %>
+  <%= link_to "Faça login para comentar.", new_user_session_path, redirect_back: request.fullpath, class: "mt-4" %>
+<% end %>
+
 <%= turbo_frame_tag "comments" do %>
   <% if @comments.any? %>
-    <% @comments.each do |comment| %>
+    <% @comments.order(created_at: :desc).each do |comment| %>
       <p class="mt-2"><strong><%= comment.user.name %>:</strong> <%= comment.content %></p>
     <% end %>
   <% else %>
     <p class="text-gray-500 mt-2">Nenhum comentário ainda.</p>
   <% end %>
-<% end %>
-
-<% if user_signed_in? %>
-  <%= form_with model: [@announcement, Comment.new], data: { turbo_frame: "comments" } do |f| %>
-    <%= f.text_area :content, placeholder: "Adicione seu comentário...", class: "border w-full p-2 mt-4 rounded" %>
-    <%= f.submit "Comentar", class: "bg-blue-500 text-white p-2 rounded mt-2 hover:bg-blue-600" %>
-  <% end %>
-<% else %>
-  <%= link_to "Faça login para comentar.", new_user_session_path, redirect_back: request.fullpath, class: "mt-4" %>
 <% end %>

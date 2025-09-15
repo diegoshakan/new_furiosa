@@ -12,7 +12,10 @@ class CommentsController < ApplicationController
         format.html { redirect_to @announcement, notice: "Comentário adicionado!" }
       end
     else
-      render "announcements/show"
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("comment_form", partial: "announcements/comment_form", locals: { announcement: @announcement, comment: @comment }) }
+        format.html { render "announcements/show" }
+      end
     end
   end
 

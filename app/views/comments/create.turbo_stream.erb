@@ -1,0 +1,13 @@
+<%= turbo_stream.replace "comments" do %>
+  <% if @announcement.comments.any? %>
+    <% @announcement.comments.order(created_at: :desc).each do |comment| %>
+      <p class="mt-2"><strong><%= comment.user.name %>:</strong> <%= comment.content %></p>
+    <% end %>
+  <% else %>
+    <p class="text-gray-500 mt-2">Nenhum comentário ainda.</p>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.update "comment_form" do %>
+  <%= render "announcements/comment_form", announcement: @announcement %>
+<% end %>
