@@ -3,7 +3,13 @@
   <p class="text-gray-600 mt-2"><%= @announcement.description %></p>
   <p class="text-lg font-semibold mt-2"><%= number_to_currency(@announcement.price, unit: "R$") %></p>
   <p class="text-gray-500">Por: <%= @announcement.user.name %></p>
-  <p class="text-gray-500"><%= @announcement.user.address.city %>, <%= @announcement.user.address.state %></p>
+  <p class="text-gray-500">
+    <% if @announcement.user.address.neighborhood.present? %>
+      <%= @announcement.user.address.neighborhood %> - <%= @announcement.user.address.city %>, <%= @announcement.user.address.state %>
+    <% else %>
+      <%= @announcement.user.address.city %>, <%= @announcement.user.address.state %>
+    <% end %>
+  </p>
 
   <!-- Imagens -->
   <%= render "show_images" %>
